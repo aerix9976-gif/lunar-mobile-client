@@ -1,0 +1,22 @@
+name: Build APK
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Create Dummy APK Artifact
+        run: |
+          mkdir -p output
+          echo "Lunar Mobile Client Build" > output/lunar-mobile.apk
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: LunarMobile-Artifact
+          path: output/*.apk
